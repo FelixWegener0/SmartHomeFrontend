@@ -1,6 +1,11 @@
-import { Box, Button, HStack, Icon, Pressable, Text, VStack } from "native-base";
+import { Box, Button, VStack, Text, HamburgerIcon, HStack } from 'native-base';
+import React from 'react';
+import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 
 export const MainPage = () => {
+    const navigation = useNavigate();
+
     return (
         <div
             style={{
@@ -9,16 +14,19 @@ export const MainPage = () => {
                 height: '100vh',
             }}
         >
-            <Box backgroundColor={'white'} rounded={'full'} alignItems={'center'}>
-                <Text fontSize={'xl'} fontFamily={'heading'}>
-                    Overview SmartHome
-                </Text>
-            </Box>
             <VStack>
-                <Pressable onPress={() => console.log('test')}>
-                    <Icon name="cog" />
-                    <Text>Settings LED</Text>
-                </Pressable>
+                <Box
+                    rounded='full'
+                    backgroundColor='white'
+                    width={'50%'}
+                >
+                    <Button onFocus={() => navigation('/license')} backgroundColor={'white'}>
+                        <HStack space={6}>
+                            <HamburgerIcon />
+                            <Text>Lizenzen</Text>
+                        </HStack>
+                    </Button>
+                </Box>
             </VStack>
         </div>
     );
