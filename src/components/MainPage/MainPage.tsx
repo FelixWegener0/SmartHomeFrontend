@@ -1,10 +1,44 @@
 import { Box, Button, VStack, Text, HamburgerIcon, HStack } from 'native-base';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
+import { getInfo } from '../../utils/Api/getInfo';
+
+type returnType = {
+    devices: {
+        name: string,
+        url: string,
+    }[]
+}
 
 export const MainPage = () => {
     const navigation = useNavigate();
+    const [currentDevices, setCurrentDevices] = useState<returnType>();
+
+    useEffect(() => {
+        const info = async () => {
+            setCurrentDevices(await getInfo())
+        }
+        info();
+    }, [])
+
+    const CurrentDevicesMap = () => {
+        if (!currentDevices) {
+            return null;
+        }
+
+        return (
+            <>
+                {currentDevices.devices.map((element, index) => {
+                    return (
+                        <Text key={index}>
+                            {element.name}
+                        </Text>
+                    )
+                })}
+            </>
+        )
+    }
 
     return (
         <div
@@ -26,6 +60,7 @@ export const MainPage = () => {
                             <Text>Lizenzen</Text>
                         </HStack>
                     </Button>
+                    <CurrentDevicesMap />
                 </Box>
             </VStack>
         </div>
