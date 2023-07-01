@@ -13,33 +13,21 @@ type returnType = {
 
 export const MainPage = () => {
     const navigation = useNavigate();
-    const [currentDevices, setCurrentDevices] = useState<returnType>();
+    const [currentTemp, setCurrentTemp] = useState<number>();
+    let isMounted = true;
 
     useEffect(() => {
         const info = async () => {
-            setCurrentDevices(await getInfo())
+            if (isMounted) {
+                setCurrentTemp(await getInfo());
+            }
         }
-        info();
+
+        const interval = setInterval(() => {
+            info();
+        }, 10000)
     }, [])
-
-    const CurrentDevicesMap = () => {
-        if (!currentDevices) {
-            return null;
-        }
-
-        return (
-            <>
-                {currentDevices.devices.map((element, index) => {
-                    return (
-                        <Text key={index}>
-                            {element.name}
-                        </Text>
-                    )
-                })}
-            </>
-        )
-    }
-
+ 
     return (
         <div
             style={{
@@ -60,7 +48,7 @@ export const MainPage = () => {
                             <Text>Lizenzen</Text>
                         </HStack>
                     </Button>
-                    <CurrentDevicesMap />
+                    <Text>Aktuelle Temperatur: {currentTemp}°C</Text>
                 </Box>
             </VStack>
         </div>
