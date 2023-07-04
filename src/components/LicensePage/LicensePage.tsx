@@ -10,9 +10,9 @@ export const LicensePage = () => {
     const LicenseMap = () => {
         return (
             <VStack>
-                {Object.keys(config.dependencies).map((element) => {
+                {Object.keys(config.dependencies).map((element, index) => {
                     return (
-                        <Text color={'white'} fontSize={24} fontWeight={'bold'}>
+                        <Text color={'white'} fontSize={24} fontWeight={'bold'} key={index}>
                             {element}
                         </Text>
                     )
