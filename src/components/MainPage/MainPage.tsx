@@ -1,31 +1,28 @@
-import { Box, Button, VStack, Text, HamburgerIcon, HStack } from 'native-base';
+import { Box, Button, VStack, Text, HamburgerIcon, HStack, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { getInfo } from '../../utils/Api/getInfo';
-
-type returnType = {
-    devices: {
-        name: string,
-        url: string,
-    }[]
-}
+import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
 
 export const MainPage = () => {
     const navigation = useNavigate();
     const [currentTemp, setCurrentTemp] = useState<number>();
+    const [currenthumidity, setCurrenthumidity] = useState<number>();
+
     let isMounted = true;
 
     useEffect(() => {
         const info = async () => {
             if (isMounted) {
-                setCurrentTemp(await getInfo());
+                console.log('call intervall')
+                setCurrentTemp(await getTemp());
+                setCurrenthumidity(await getHumid());
             }
         }
 
         const interval = setInterval(() => {
             info();
-        }, 10000)
+        }, 120000)
     }, [])
  
     return (
@@ -38,7 +35,7 @@ export const MainPage = () => {
         >
             <VStack>
                 <Box
-                    rounded='full'
+                rounded={'sm'}
                     backgroundColor='white'
                     width={'50%'}
                 >
@@ -49,6 +46,8 @@ export const MainPage = () => {
                         </HStack>
                     </Button>
                     <Text>Aktuelle Temperatur: {currentTemp}°C</Text>
+                    <Text>Aktuelle Luftfeuchtigkeit: {currenthumidity}%</Text>
+                    <View height={"50px"}/>
                 </Box>
             </VStack>
         </div>

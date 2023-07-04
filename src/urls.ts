@@ -1,1 +1,1 @@
-export const BASEURL = 'http://192.168.178.48:5000';
+export const TempSensorUrl = 'http://192.168.178.48:5000';
