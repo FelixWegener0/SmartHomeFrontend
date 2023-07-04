@@ -4,4 +4,4 @@
 
 ## start projekt
 
-### yarn start
+yarn && yarn start
