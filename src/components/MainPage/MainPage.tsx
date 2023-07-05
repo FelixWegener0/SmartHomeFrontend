@@ -35,7 +35,9 @@ export const MainPage = () => {
         info();
 
         const interval = setInterval(() => {
+            setLoadingTemp(true);
             info();
+            setLoadingTemp(false);
         }, 120000)
 
         return () => {
