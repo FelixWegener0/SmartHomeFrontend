@@ -14,15 +14,19 @@ export const MainPage = () => {
     useEffect(() => {
         const info = async () => {
             if (isMounted) {
-                console.log('call intervall')
                 setCurrentTemp(await getTemp());
                 setCurrenthumidity(await getHumid());
             }
         }
+        info();
 
         const interval = setInterval(() => {
             info();
         }, 120000)
+
+        return () => {
+            isMounted = false;
+        }
     }, [])
  
     return (
