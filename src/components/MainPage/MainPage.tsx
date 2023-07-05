@@ -1,23 +1,27 @@
-import { Box, Button, VStack, Text, HamburgerIcon, HStack, View } from 'native-base';
+import { Box, Button, VStack, Text, HamburgerIcon, HStack, View, Spacer } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsRotate, faBars, faCloud, faTemperatureThreeQuarters } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate, faBars, faCloud, faFan, faTemperatureThreeQuarters } from '@fortawesome/free-solid-svg-icons';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 
 export const MainPage = () => {
     const navigation = useNavigate();
     const [currentTemp, setCurrentTemp] = useState<number>();
     const [currenthumidity, setCurrenthumidity] = useState<number>();
+    const [loadingTemp, setLoadingTemp] = useState<boolean>(false);
+    const [fan, setFan] = useState<boolean>()
 
     let isMounted = true;
 
-    const info = async () => {
+    const handlGetInfo = async () => {
         if (isMounted) {
+            setLoadingTemp(true);
             setCurrentTemp(await getTemp());
             setCurrenthumidity(await getHumid());
+            setLoadingTemp(false);
         }
     }
 
@@ -61,6 +65,10 @@ export const MainPage = () => {
                             <Text>Lizenzen</Text>
                         </HStack>
                     </Button>
+
+                    <Text>Temperatur</Text>
+                    <View height={"20px"}/>
+
                     <HStack space={4}>
                         <FontAwesomeIcon icon={faTemperatureThreeQuarters} />
                         <Text>{currentTemp}°C</Text>
@@ -70,12 +78,24 @@ export const MainPage = () => {
                         <Text>{currenthumidity}%</Text>
                     </HStack>
                     
-                    <Button backgroundColor={'white'} onFocus={() => info()} paddingLeft={-2}>
-                        <HStack space={4}>
-                            <FontAwesomeIcon icon={faArrowsRotate} />
-                            <Text>Refresh Temperature</Text>
-                        </HStack>
-                    </Button>
+                    <FontAwesomeIcon icon={faArrowsRotate} spin={loadingTemp} onClick={() => handlGetInfo()} />
+
+                    <View height={"50px"}/>
+                </Box>
+                <View height={"20px"}/>
+                <Box
+                    rounded={'sm'}
+                    backgroundColor='white'
+                    width={'50%'}
+                    alignItems={'flex-start'}
+                    paddingLeft={8}
+                >
+                    <Text>Fan controll</Text>
+                    <View height={"20px"}/>
+                    <HStack>
+                        <FontAwesomeIcon icon={faFan} spin={fan} onClick={() => setFan(!fan)}/>
+                        <Text paddingLeft={4}>Fan 1</Text>
+                    </HStack>
                     <View height={"50px"}/>
                 </Box>
             </VStack>
