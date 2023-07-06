@@ -1,13 +1,11 @@
-import { Box, Button, VStack, Text, HStack, View } from 'native-base';
+import { VStack, View } from 'native-base';
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsRotate, faBars, faCloud, faFan, faTemperatureThreeQuarters } from '@fortawesome/free-solid-svg-icons';
 import { writeRelayHigh, writeRelayLow } from '../../utils/Api/relayControllApi';
+import { TempInfoPannel } from '../TempInfoPannel/TempInfoPannel';
+import { VentilatorControllPannel } from '../VentilatorControllPannel/VentilatorControllPannel';
 
 export const MainPage = () => {
-    const navigation = useNavigate();
     const [currentTemp, setCurrentTemp] = useState<number>();
     const [currenthumidity, setCurrenthumidity] = useState<number>();
     const [loadingTemp, setLoadingTemp] = useState<boolean>(false);
@@ -15,13 +13,12 @@ export const MainPage = () => {
 
     let isMounted = true;
 
-    const handleFan = async (currentState: boolean | undefined) => {
+    const handleFan = (currentState?: boolean) => {
+        setFan(!currentState)
         if (currentState) {
             writeRelayLow();
-            setFan(false);
         } else {
             writeRelayHigh();
-            setFan(true);
         }
     }
 
@@ -47,7 +44,7 @@ export const MainPage = () => {
             setLoadingTemp(true);
             info();
             setLoadingTemp(false);
-        }, 120000)
+        }, 12000)
 
         return () => {
             isMounted = false;
@@ -63,52 +60,19 @@ export const MainPage = () => {
             }}
         >
             <VStack>
-                <Box
-                    rounded={'sm'}
-                    backgroundColor='white'
-                    width={'50%'}
-                    alignItems={'flex-start'}
-                    paddingLeft={8}
-                >
-                    <Button onFocus={() => navigation('/license')} backgroundColor={'white'} paddingLeft={-2}>
-                        <HStack space={4}>
-                            <FontAwesomeIcon icon={faBars} />
-                            <Text>Lizenzen</Text>
-                        </HStack>
-                    </Button>
+                <TempInfoPannel
+                    loadingTemp={loadingTemp}
+                    handlGetInfo={handlGetInfo}
+                    currentTemp={currentTemp}
+                    currenthumidity={currenthumidity}
+                />
 
-                    <Text>Temperatur</Text>
-                    <View height={"20px"}/>
-
-                    <HStack space={4}>
-                        <FontAwesomeIcon icon={faTemperatureThreeQuarters} />
-                        <Text>{currentTemp}°C</Text>
-                    </HStack>
-                    <HStack space={4}>
-                        <FontAwesomeIcon icon={faCloud} />
-                        <Text>{currenthumidity}%</Text>
-                    </HStack>
-                    
-                    <FontAwesomeIcon icon={faArrowsRotate} spin={loadingTemp} onClick={() => handlGetInfo()} />
-
-                    <View height={"50px"}/>
-                </Box>
                 <View height={"20px"}/>
-                <Box
-                    rounded={'sm'}
-                    backgroundColor='white'
-                    width={'50%'}
-                    alignItems={'flex-start'}
-                    paddingLeft={8}
-                >
-                    <Text>Fan controll</Text>
-                    <View height={"20px"}/>
-                    <HStack>
-                        <FontAwesomeIcon icon={faFan} spin={fan} onClick={() => handleFan(fan)}/>
-                        <Text paddingLeft={4}>Fan 1</Text>
-                    </HStack>
-                    <View height={"50px"}/>
-                </Box>
+                
+                <VentilatorControllPannel
+                    fan={fan}
+                    handleFan={handleFan}
+                />
             </VStack>
         </div>
     );
