@@ -2,8 +2,8 @@ import { VStack, View } from 'native-base';
 import { useEffect, useState } from 'react';
 import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
 import { writeRelayHigh, writeRelayLow } from '../../utils/Api/relayControllApi';
-import { TempInfoPannel } from '../TempInfoPannel/TempInfoPannel';
-import { VentilatorControllPannel } from '../VentilatorControllPannel/VentilatorControllPannel';
+import { TempInfoPannel } from '../../components/TempInfoPannel/TempInfoPannel';
+import { VentilatorControllPannel } from '../../components/VentilatorControllPannel/VentilatorControllPannel';
 
 export const MainPage = () => {
     const [currentTemp, setCurrentTemp] = useState<number>();
