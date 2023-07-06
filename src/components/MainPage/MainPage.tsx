@@ -1,11 +1,9 @@
-import { Box, Button, VStack, Text, HamburgerIcon, HStack, View, Spacer } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import ReactDOM from "react-dom";
+import { Box, Button, VStack, Text, HStack, View } from 'native-base';
+import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faBars, faCloud, faFan, faTemperatureThreeQuarters } from '@fortawesome/free-solid-svg-icons';
-import { icon } from '@fortawesome/fontawesome-svg-core';
 
 export const MainPage = () => {
     const navigation = useNavigate();
