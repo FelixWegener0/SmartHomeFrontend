@@ -1,6 +1,6 @@
 import { faBars, faTemperatureThreeQuarters, faCloud, faArrowsRotate } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Box, Button, HStack, View, Text } from "native-base"
+import { Box, Button, HStack, Text, Spacer } from "native-base"
 import { useNavigate } from "react-router-dom";
 
 type TempInfoPannelProps = {
@@ -30,20 +30,23 @@ export const TempInfoPannel: React.FC<TempInfoPannelProps> = ({ handlGetInfo, lo
             </Button>
 
             <Text>Temperatur</Text>
-            <View height={"20px"}/>
+            <Spacer height={"20px"}/>
 
             <HStack space={4}>
                 <FontAwesomeIcon icon={faTemperatureThreeQuarters} size={'lg'} />
                 <Text>{currentTemp}°C</Text>
             </HStack>
+
+            <Spacer height={'10px'} />
             <HStack space={4}>
                 <FontAwesomeIcon icon={faCloud} size={'lg'} />
                 <Text>{currenthumidity}%</Text>
             </HStack>
             
+            <Spacer height={'10px'} />
             <FontAwesomeIcon icon={faArrowsRotate} spin={loadingTemp} onClick={() => handlGetInfo()} size={'lg'} />
 
-            <View height={"50px"}/>
+            <Spacer height={"30px"}/>
         </Box>
     )
 }

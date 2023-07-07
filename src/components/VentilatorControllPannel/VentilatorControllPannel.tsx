@@ -20,6 +20,7 @@ export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> =
             alignItems={'flex-start'}
             paddingLeft={8}
         >
+            <Spacer height={"15px"}/>
             <HStack>
                 <Text>Ventilator Controll</Text>
                 <Spacer width={'40px'} />
@@ -27,7 +28,7 @@ export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> =
             </HStack>        
 
             <Spacer height={'20px'}/>
-            {autoFanControll && <Text>Automatische steuerung bei mehr als {autoFanControllTemp}°C</Text>}
+            {autoFanControll && <Text>Automatisches Ventilator schalten bei mehr als {autoFanControllTemp}°C</Text>}
             {autoFanControll && <Text>Automatischer modus Aktiv</Text>}
 
             <Spacer height={"20px"}/>
@@ -35,7 +36,7 @@ export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> =
                 <FontAwesomeIcon icon={faFan} spin={fan} onClick={() => handleFan(fan || false)} size={'lg'} />
                 <Text paddingLeft={4}>Schreibtisch</Text>
             </HStack>
-            <Spacer height={"50px"}/>
+            <Spacer height={"15"}/>
         </Box>
     )
 }

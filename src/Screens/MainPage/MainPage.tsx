@@ -13,7 +13,7 @@ export const MainPage = () => {
     const [autoFanControll, setAutoFanControll] = useState<boolean>(false);
 
     let isMounted = true;
-    let autoFanControllTemp = 26;
+    let autoFanControllTemp = 28;
 
     const handleChangeAutoFanControll = (value: boolean) => {
         setAutoFanControll(value);
