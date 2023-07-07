@@ -1,13 +1,17 @@
-import { faFan } from "@fortawesome/free-solid-svg-icons"
+import { faFan, faRobot } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Box, View, HStack, Text } from "native-base"
+import { Box, View, HStack, Text, Spacer } from "native-base"
 
 type VentilatorControllPannelProps = {
     fan?: boolean,
+    autoFanControll: boolean,
+    autoFanControllTemp: number,
+
     handleFan: (value: boolean) => void,
+    setAutoFanControll: (value: boolean) => void,
 }
 
-export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> = ({ handleFan, fan }) => {
+export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> = ({ setAutoFanControll, handleFan, autoFanControllTemp, autoFanControll, fan }) => {
     return (
         <Box
             rounded={'sm'}
@@ -16,7 +20,15 @@ export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> =
             alignItems={'flex-start'}
             paddingLeft={8}
         >
-            <Text>Ventilator Controll</Text>
+            <HStack>
+                <Text>Ventilator Controll</Text>
+                <Spacer width={'40px'} />
+                <FontAwesomeIcon icon={faRobot} onClick={() => setAutoFanControll(!autoFanControll)} fade={autoFanControll} />
+            </HStack>        
+
+            {autoFanControll && <Text>Automatische steuerung bei mehr als {autoFanControllTemp}°C</Text>}
+            {autoFanControll && <Text>Automatischer modus Aktiv</Text>}
+
             <View height={"20px"}/>
             <HStack>
                 <FontAwesomeIcon icon={faFan} spin={fan} onClick={() => handleFan(fan || false)} size={'lg'} />

@@ -9,9 +9,15 @@ export const MainPage = () => {
     const [currentTemp, setCurrentTemp] = useState<number>();
     const [currenthumidity, setCurrenthumidity] = useState<number>();
     const [loadingTemp, setLoadingTemp] = useState<boolean>(false);
-    const [fan, setFan] = useState<boolean>()
+    const [fan, setFan] = useState<boolean>();
+    const [autoFanControll, setAutoFanControll] = useState<boolean>(false);
 
     let isMounted = true;
+    let autoFanControllTemp = 26;
+
+    const handleChangeAutoFanControll = (value: boolean) => {
+        setAutoFanControll(value);
+    }
 
     const handleFan = (currentState?: boolean) => {
         setFan(!currentState)
@@ -34,8 +40,21 @@ export const MainPage = () => {
     useEffect(() => {
         const info = async () => {
             if (isMounted) {
-                setCurrentTemp(await getTemp());
-                setCurrenthumidity(await getHumid());
+                let temp = await getTemp();
+                let humid = await getHumid();
+
+                if (autoFanControll) {
+                    if (temp > autoFanControllTemp) {
+                        writeRelayHigh();
+                        setFan(true);
+                    } else {
+                        writeRelayLow();
+                        setFan(false);
+                    }
+                }
+
+                setCurrentTemp(temp);
+                setCurrenthumidity(humid);
             }
         }
         info();
@@ -44,12 +63,12 @@ export const MainPage = () => {
             setLoadingTemp(true);
             info();
             setLoadingTemp(false);
-        }, 12000)
+        }, 120000)
 
         return () => {
             isMounted = false;
         }
-    }, [])
+    }, [autoFanControll])
  
     return (
         <div
@@ -71,7 +90,8 @@ export const MainPage = () => {
                 
                 <VentilatorControllPannel
                     fan={fan}
-                    handleFan={handleFan}
+                    handleFan={handleFan} autoFanControll={autoFanControll} setAutoFanControll={handleChangeAutoFanControll}
+                    autoFanControllTemp={autoFanControllTemp}
                 />
             </VStack>
         </div>
