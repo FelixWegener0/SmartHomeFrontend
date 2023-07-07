@@ -1,4 +1,4 @@
-import { VStack, View } from 'native-base';
+import { Spacer, VStack } from 'native-base';
 import { useEffect, useState } from 'react';
 import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
 import { writeRelayHigh, writeRelayLow } from '../../utils/Api/relayControllApi';
@@ -45,11 +45,15 @@ export const MainPage = () => {
 
                 if (autoFanControll) {
                     if (temp > autoFanControllTemp) {
-                        writeRelayHigh();
-                        setFan(true);
+                        if (!fan) {
+                            writeRelayHigh();
+                            setFan(true);
+                        }
                     } else {
-                        writeRelayLow();
-                        setFan(false);
+                        if (fan) {
+                            writeRelayLow();
+                            setFan(false);
+                        }
                     }
                 }
 
@@ -68,7 +72,7 @@ export const MainPage = () => {
         return () => {
             isMounted = false;
         }
-    }, [autoFanControll])
+    }, [autoFanControll, fan])
  
     return (
         <div
@@ -86,7 +90,7 @@ export const MainPage = () => {
                     currenthumidity={currenthumidity}
                 />
 
-                <View height={"20px"}/>
+                <Spacer height={"20px"}/>
                 
                 <VentilatorControllPannel
                     fan={fan}
