@@ -12,7 +12,9 @@ export const WeatherApiPannel: React.FC = () => {
     const handleGetApiData = async () => {
         setLoadingData(true);
         setCurrentData(await getWeatherApiInfo());
-        setLoadingData(false);
+        setTimeout(() => {
+            setLoadingData(false);
+        }, 2500)
     }
 
 
