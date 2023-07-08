@@ -1,4 +1,4 @@
-import { Spacer, VStack } from 'native-base';
+import { HStack, Spacer, VStack } from 'native-base';
 import { useEffect, useState } from 'react';
 import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
 import { writeRelayHigh, writeRelayLow } from '../../utils/Api/relayControllApi';
@@ -14,6 +14,8 @@ export const MainPage = () => {
 
     let isMounted = true;
     let autoFanControllTemp = 28;
+    let width = '450px'
+    let hight = '200px'
 
     const handleChangeAutoFanControll = (value: boolean) => {
         setAutoFanControll(value);
@@ -82,22 +84,24 @@ export const MainPage = () => {
                 height: '100vh',
             }}
         >
-            <VStack>
+            <HStack flexWrap={'wrap'} space={5}>
                 <TempInfoPannel
                     loadingTemp={loadingTemp}
                     handlGetInfo={handlGetInfo}
                     currentTemp={currentTemp}
                     currenthumidity={currenthumidity}
+                    width={width}
+                    height={hight}
                 />
-
-                <Spacer height={"20px"}/>
                 
                 <VentilatorControllPannel
                     fan={fan}
                     handleFan={handleFan} autoFanControll={autoFanControll} setAutoFanControll={handleChangeAutoFanControll}
                     autoFanControllTemp={autoFanControllTemp}
+                    width={width}
+                    height={hight}
                 />
-            </VStack>
+            </HStack>
         </div>
     );
 };
