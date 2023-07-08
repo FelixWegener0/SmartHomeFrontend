@@ -1,4 +1,4 @@
-import { HStack, Spacer, VStack } from 'native-base';
+import { HStack } from 'native-base';
 import { useEffect, useState } from 'react';
 import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
 import { writeRelayHigh, writeRelayLow } from '../../utils/Api/relayControllApi';
