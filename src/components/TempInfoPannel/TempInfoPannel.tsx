@@ -1,32 +1,23 @@
 import { faBars, faTemperatureThreeQuarters, faCloud, faArrowsRotate } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Box, Button, HStack, Text, Spacer, VStack } from "native-base"
+import { Button, HStack, Text, Spacer } from "native-base"
 import { useNavigate } from "react-router-dom";
+import { DefaultView } from "../DefaultView/DefaultView";
 
 type TempInfoPannelProps = {
     currentTemp?: number,
     currenthumidity?: number,
     loadingTemp: boolean,
-    width: string,
-    height: string,
 
     handlGetInfo: () => void,
 }
 
-export const TempInfoPannel: React.FC<TempInfoPannelProps> = ({ handlGetInfo, loadingTemp, width, height, currentTemp, currenthumidity }) => {
+export const TempInfoPannel: React.FC<TempInfoPannelProps> = ({ handlGetInfo, loadingTemp, currentTemp, currenthumidity }) => {
     const navigation = useNavigate();
 
     return (
-        <VStack>
-            <Box
-                rounded={'sm'}
-                backgroundColor='white'
-                width={width}
-                height={height}
-                alignItems={'flex-start'}
-                paddingLeft={8}
-            >
-                <Button onFocus={() => navigation('/license')} backgroundColor={'white'} paddingLeft={-2}>
+        <DefaultView>
+            <Button onFocus={() => navigation('/license')} backgroundColor={'white'} paddingLeft={-2}>
                     <HStack space={4}>
                         <FontAwesomeIcon icon={faBars} size={'lg'} />
                         <Text>Lizenzen</Text>
@@ -51,8 +42,6 @@ export const TempInfoPannel: React.FC<TempInfoPannelProps> = ({ handlGetInfo, lo
                 <FontAwesomeIcon icon={faArrowsRotate} spin={loadingTemp} onClick={() => handlGetInfo()} size={'lg'} />
 
                 <Spacer height={"30px"}/>
-            </Box>
-            <Box height={'20px'} backgroundColor={'black'}/>
-        </VStack>
+        </DefaultView>
     )
 }

@@ -14,8 +14,6 @@ export const MainPage = () => {
 
     let isMounted = true;
     let autoFanControllTemp = 28;
-    let width = '450px'
-    let hight = '200px'
 
     const handleChangeAutoFanControll = (value: boolean) => {
         setAutoFanControll(value);
@@ -90,16 +88,12 @@ export const MainPage = () => {
                     handlGetInfo={handlGetInfo}
                     currentTemp={currentTemp}
                     currenthumidity={currenthumidity}
-                    width={width}
-                    height={hight}
                 />
                 
                 <VentilatorControllPannel
                     fan={fan}
                     handleFan={handleFan} autoFanControll={autoFanControll} setAutoFanControll={handleChangeAutoFanControll}
                     autoFanControllTemp={autoFanControllTemp}
-                    width={width}
-                    height={hight}
                 />
             </HStack>
         </div>

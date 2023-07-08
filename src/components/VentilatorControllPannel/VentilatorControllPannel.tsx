@@ -1,30 +1,21 @@
 import { faFan, faRobot } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Box, HStack, Text, Spacer, VStack } from "native-base"
+import { HStack, Text, Spacer } from "native-base"
+import { DefaultView } from "../DefaultView/DefaultView"
 
 type VentilatorControllPannelProps = {
     fan?: boolean,
     autoFanControll: boolean,
     autoFanControllTemp: number,
-    width: string,
-    height: string,
 
     handleFan: (value: boolean) => void,
     setAutoFanControll: (value: boolean) => void,
 }
 
-export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> = ({ setAutoFanControll, handleFan, width, height, autoFanControllTemp, autoFanControll, fan }) => {
+export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> = ({ setAutoFanControll, handleFan, autoFanControllTemp, autoFanControll, fan }) => {
     return (
-        <VStack>
-            <Box
-                rounded={'sm'}
-                backgroundColor='white'
-                width={width}
-                height={height}
-                alignItems={'flex-start'}
-                paddingLeft={8}
-            >
-                <Spacer height={"15px"}/>
+        <DefaultView>
+            <Spacer height={"15px"}/>
                 <HStack>
                     <Text>Ventilator Controll</Text>
                     <Spacer width={'40px'} />
@@ -32,8 +23,8 @@ export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> =
                 </HStack>        
 
                 <Spacer height={'20px'}/>
-                {autoFanControll && <Text>Automatisches Ventilator schalten bei mehr als {autoFanControllTemp}°C</Text>}
-                {autoFanControll && <Text>Automatischer modus Aktiv</Text>}
+                <>{autoFanControll && <Text>Automatisches Ventilator schalten bei mehr als {autoFanControllTemp}°C</Text>}</>
+                <>{autoFanControll && <Text>Automatischer modus Aktiv</Text>}</>
 
                 <Spacer height={"20px"}/>
                 <HStack>
@@ -41,8 +32,7 @@ export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> =
                     <Text paddingLeft={4}>Schreibtisch</Text>
                 </HStack>
                 <Spacer height={"15"}/>
-            </Box>
-            <Box height={'20px'} backgroundColor={'black'}/>
-        </VStack>
+        </DefaultView>
+
     )
 }
