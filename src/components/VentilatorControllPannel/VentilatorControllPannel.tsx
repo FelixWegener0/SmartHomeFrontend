@@ -16,22 +16,22 @@ export const VentilatorControllPannel: React.FC<VentilatorControllPannelProps> =
     return (
         <DefaultView>
             <Spacer height={"15px"}/>
-                <HStack>
-                    <Text>Ventilator Controll</Text>
-                    <Spacer width={'40px'} />
-                    <FontAwesomeIcon icon={faRobot} size={'lg'} onClick={() => setAutoFanControll(!autoFanControll)} fade={autoFanControll} />
-                </HStack>        
+            <HStack>
+                <Text>Ventilator Controll</Text>
+                <Spacer width={'40px'} />
+                <FontAwesomeIcon icon={faRobot} size={'lg'} onClick={() => setAutoFanControll(!autoFanControll)} fade={autoFanControll} />
+            </HStack>        
 
-                <Spacer height={'20px'}/>
-                <>{autoFanControll && <Text>Automatisches Ventilator schalten bei mehr als {autoFanControllTemp}°C</Text>}</>
-                <>{autoFanControll && <Text>Automatischer modus Aktiv</Text>}</>
+            <Spacer height={'20px'}/>
+            <>{autoFanControll && <Text>Automatisches Ventilator schalten bei mehr als {autoFanControllTemp}°C</Text>}</>
+            <>{autoFanControll && <Text>Automatischer modus Aktiv</Text>}</>
 
-                <Spacer height={"20px"}/>
-                <HStack>
-                    <FontAwesomeIcon icon={faFan} spin={fan} onClick={() => handleFan(fan || false)} size={'lg'} />
-                    <Text paddingLeft={4}>Schreibtisch</Text>
-                </HStack>
-                <Spacer height={"15"}/>
+            <Spacer height={"20px"}/>
+            <HStack>
+                <FontAwesomeIcon icon={faFan} spin={fan} onClick={() => handleFan(fan || false)} size={'lg'} />
+                <Text paddingLeft={4}>Schreibtisch</Text>
+            </HStack>
+            <Spacer height={"15"}/>
         </DefaultView>
 
     )

@@ -4,6 +4,7 @@ import { getHumid, getTemp } from '../../utils/Api/TempSensorApi';
 import { writeRelayHigh, writeRelayLow } from '../../utils/Api/relayControllApi';
 import { TempInfoPannel } from '../../components/TempInfoPannel/TempInfoPannel';
 import { VentilatorControllPannel } from '../../components/VentilatorControllPannel/VentilatorControllPannel';
+import { WeatherApiPannel } from '../../components/WeatherApiPannel/WeatherApiPannel';
 
 export const MainPage = () => {
     const [currentTemp, setCurrentTemp] = useState<number>();
@@ -95,6 +96,8 @@ export const MainPage = () => {
                     handleFan={handleFan} autoFanControll={autoFanControll} setAutoFanControll={handleChangeAutoFanControll}
                     autoFanControllTemp={autoFanControllTemp}
                 />
+
+                <WeatherApiPannel />
             </HStack>
         </div>
     );
