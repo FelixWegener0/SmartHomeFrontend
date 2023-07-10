@@ -27,7 +27,7 @@ export const WeatherApiPannel: React.FC = () => {
             <VStack alignItems={'flex-start'} space={4}>
                 <Spacer height={"15px"}/>
                 <Text>Aktuelle Wetter daten:</Text>
-                <Text>Temperatur in dortmund: {currentData}</Text>
+                <Text>Temperatur in dortmund: {currentData}°C</Text>
 
                 <FontAwesomeIcon icon={faArrowsRotate} spin={loadingData} onClick={() => handleGetApiData()} size={'lg'} />
             </VStack>

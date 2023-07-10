@@ -5,14 +5,15 @@ type DefaultViewProps = {
 }
 
 export const DefaultView: React.FC<DefaultViewProps> = ({ children }) => {
-    let width = '450px'
+    let width = '420px'
     let height = '200px'
 
     return (
-        <VStack>
+        <VStack alignItems={'center'}>
             <Box
                 rounded={'sm'}
                 backgroundColor='white'
+                maxWidth={'90%'}
                 width={width}
                 height={height}
                 alignItems={'flex-start'}
