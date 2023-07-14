@@ -1,10 +1,12 @@
 import { Box, VStack } from "native-base"
 
 type DefaultViewProps = {
-    children?: React.ReactElement | React.ReactElement[]
+    children?: React.ReactElement | React.ReactElement[],
+    customWidth?: string,
+    customMaxWidh?: string
 }
 
-export const DefaultView: React.FC<DefaultViewProps> = ({ children }) => {
+export const DefaultView: React.FC<DefaultViewProps> = ({ children, customWidth, customMaxWidh }) => {
     let width = '420px'
     let height = '200px'
 
@@ -13,8 +15,8 @@ export const DefaultView: React.FC<DefaultViewProps> = ({ children }) => {
             <Box
                 rounded={'sm'}
                 backgroundColor='white'
-                maxWidth={'90%'}
-                width={width}
+                maxWidth={customMaxWidh || '90%'}
+                width={customWidth || width}
                 height={height}
                 alignItems={'flex-start'}
                 paddingLeft={8}

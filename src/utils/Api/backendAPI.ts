@@ -3,8 +3,9 @@ import { backendServerUrl } from "../../urls"
 
 type dataType = {
     time: string,
-    temp: number
-}[]
+    temp: number,
+    humid: number,
+}[];
 
 export const getAllData = async () => {
     try {
@@ -17,15 +18,16 @@ export const getAllData = async () => {
 
 export const getTodaysTempData = async () => {
     try {
-        const result = await axios.get(backendServerUrl + '/getThisDaysTempValues')
+        const result = await axios.get(backendServerUrl + '/getThisDaysTempValues');
 
-        let data: dataType = []
-        console.log(result.data.length)
+        let data: dataType = [];
+        console.log(result.data.length);
 
         for(let i = 0; i < result.data.length; i++) {
             data.push({
                 time: result.data[i][1],
-                temp: result.data[i][0]
+                temp: result.data[i][0],
+                humid: result.data[i][2]
             })
         }
         return data.reverse();
@@ -37,8 +39,8 @@ export const getTodaysTempData = async () => {
 export const changeAutoFanModi = (value: boolean) => {
     let controllValue = value? 1 : 0
     try {
-        axios.get(backendServerUrl + '/writeAutoModus/fanControll/' + String(controllValue))
+        axios.get(backendServerUrl + '/writeAutoModus/fanControll/' + String(controllValue));
     } catch (error) {
-        console.log("Error in changeAutoFanModi")
+        console.log("Error in changeAutoFanModi");
     }
-}
+};

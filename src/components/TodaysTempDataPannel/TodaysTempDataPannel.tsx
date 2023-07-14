@@ -6,13 +6,14 @@ import { Line, LineChart, XAxis, YAxis } from "recharts"
 
 type TodaysTempDataPannel = {}
 
-type dataType = {
+type dataTypeTemp = {
     time: string,
-    temp: number
-}[]
+    temp: number,
+    humid: number,
+}[];
 
 export const TodaysTempDataPannel: React.FC<TodaysTempDataPannel> = ({}) => {
-    const [data, setData] = useState<dataType>()
+    const [data, setData] = useState<dataTypeTemp>();
 
     useEffect(() => {
         const getInfo = async () => {
@@ -23,14 +24,15 @@ export const TodaysTempDataPannel: React.FC<TodaysTempDataPannel> = ({}) => {
     }, [])
 
     return (
-        <DefaultView>
+        <DefaultView customWidth={"1380px"} customMaxWidh={"97%"} >
             <VStack space={5}>
                 <Text>Heutige Wetterdaten vom Sensor</Text>
 
-                <LineChart width={300} height={150} data={data}>
+                <LineChart width={1000} height={150} data={data}>
                     <XAxis dataKey="time" />
                     <YAxis />
                     <Line type={"monotone"} dataKey="temp" stroke="#82ca9d" />
+                    <Line type={"monotone"} dataKey="humid" stroke="#7393B3" />
                 </LineChart>
             </VStack>
         </DefaultView>
