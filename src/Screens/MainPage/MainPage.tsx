@@ -5,6 +5,8 @@ import { writeRelayHigh, writeRelayLow } from '../../utils/Api/relayControllApi'
 import { TempInfoPannel } from '../../components/TempInfoPannel/TempInfoPannel';
 import { VentilatorControllPannel } from '../../components/VentilatorControllPannel/VentilatorControllPannel';
 import { WeatherApiPannel } from '../../components/WeatherApiPannel/WeatherApiPannel';
+import { TodaysTempDataPannel } from '../../components/TodaysTempDataPannel/TodaysTempDataPannel';
+import { changeAutoFanModi } from '../../utils/Api/backendAPI';
 
 export const MainPage = () => {
     const [currentTemp, setCurrentTemp] = useState<number>();
@@ -16,7 +18,8 @@ export const MainPage = () => {
     let isMounted = true;
     let autoFanControllTemp = 28;
 
-    const handleChangeAutoFanControll = (value: boolean) => {
+    const handleChangeAutoFanControll = async (value: boolean) => {
+        changeAutoFanModi(value); 
         setAutoFanControll(value);
     }
 
@@ -44,20 +47,6 @@ export const MainPage = () => {
                 let temp = await getTemp();
                 let humid = await getHumid();
 
-                if (autoFanControll) {
-                    if (temp > autoFanControllTemp) {
-                        if (!fan) {
-                            writeRelayHigh();
-                            setFan(true);
-                        }
-                    } else {
-                        if (fan) {
-                            writeRelayLow();
-                            setFan(false);
-                        }
-                    }
-                }
-
                 setCurrentTemp(temp);
                 setCurrenthumidity(humid);
             }
@@ -73,7 +62,7 @@ export const MainPage = () => {
         return () => {
             isMounted = false;
         }
-    }, [autoFanControll, fan])
+    }, [fan])
  
     return (
         <div
@@ -98,6 +87,8 @@ export const MainPage = () => {
                 />
 
                 <WeatherApiPannel />
+
+                <TodaysTempDataPannel />
             </HStack>
         </div>
     );
