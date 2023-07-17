@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { DefaultView } from "../DefaultView/DefaultView"
 import { getTodaysTempData } from "../../utils/Api/backendAPI"
 import { VStack, Text } from "native-base"
@@ -14,25 +14,33 @@ type dataTypeTemp = {
 
 export const TodaysTempDataPannel: React.FC<TodaysTempDataPannel> = ({}) => {
     const [data, setData] = useState<dataTypeTemp>();
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
     useEffect(() => {
+        const hadleWindowResize = () => {
+            setWindowWidth(window.innerWidth)
+        }
         const getInfo = async () => {
             setData(await getTodaysTempData())
         }
 
+        window.addEventListener('resize', hadleWindowResize);
         getInfo();
+
+        return () => {
+            window.removeEventListener('resize', hadleWindowResize);
+        }
     }, [])
 
     return (
-        <DefaultView customWidth={"1380px"} customMaxWidh={"97%"} >
+        <DefaultView customWidth={windowWidth} customMaxWidh={"97%"} >
             <VStack space={5}>
                 <Text>Heutige Wetterdaten vom Sensor</Text>
 
-                <LineChart width={1000} height={150} data={data}>
+                <LineChart width={windowWidth - 100} height={150} data={data}>
                     <XAxis dataKey="time" />
-                    <YAxis />
+                    <YAxis dataKey={"temp"} />
                     <Line type={"monotone"} dataKey="temp" stroke="#82ca9d" />
-                    <Line type={"monotone"} dataKey="humid" stroke="#7393B3" />
                 </LineChart>
             </VStack>
         </DefaultView>

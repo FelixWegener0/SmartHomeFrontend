@@ -2,7 +2,7 @@ import { Box, VStack } from "native-base"
 
 type DefaultViewProps = {
     children?: React.ReactElement | React.ReactElement[],
-    customWidth?: string,
+    customWidth?: string | number,
     customMaxWidh?: string
 }
 
