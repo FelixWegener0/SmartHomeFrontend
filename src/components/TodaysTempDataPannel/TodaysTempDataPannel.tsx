@@ -14,14 +14,14 @@ type dataTypeTemp = {
 
 export const TodaysTempDataPannel: React.FC<TodaysTempDataPannel> = ({}) => {
     const [data, setData] = useState<dataTypeTemp>();
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         const hadleWindowResize = () => {
-            setWindowWidth(window.innerWidth)
+            setWindowWidth(window.innerWidth);
         }
         const getInfo = async () => {
-            setData(await getTodaysTempData())
+            setData(await getTodaysTempData());
         }
 
         window.addEventListener('resize', hadleWindowResize);
@@ -30,7 +30,7 @@ export const TodaysTempDataPannel: React.FC<TodaysTempDataPannel> = ({}) => {
         return () => {
             window.removeEventListener('resize', hadleWindowResize);
         }
-    }, [])
+    }, []);
 
     return (
         <DefaultView customWidth={windowWidth} customMaxWidh={"97%"} >
@@ -38,7 +38,7 @@ export const TodaysTempDataPannel: React.FC<TodaysTempDataPannel> = ({}) => {
                 <Text>Heutige Wetterdaten vom Sensor</Text>
 
                 <LineChart width={windowWidth - 100} height={150} data={data}>
-                    <XAxis dataKey="time" />
+                    <XAxis dataKey={"time"} />
                     <YAxis dataKey={"temp"} />
                     <Line type={"monotone"} dataKey="temp" stroke="#82ca9d" />
                 </LineChart>
