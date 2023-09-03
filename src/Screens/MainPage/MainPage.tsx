@@ -53,7 +53,7 @@ export const MainPage = () => {
         }
         info();
 
-        const interval = setInterval(() => {
+        setInterval(() => {
             setLoadingTemp(true);
             info();
             setLoadingTemp(false);
