@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { DefaultView } from "../DefaultView/DefaultView"
 import { getTodaysTempData } from "../../utils/Api/backendAPI"
 import { VStack, Text } from "native-base"
 import { Line, LineChart, XAxis, YAxis } from "recharts"
 
-type TodaysTempDataPannel = {}
+type TodaysTempDataPannelType = {}
 
 type dataTypeTemp = {
     time: string,
@@ -12,19 +12,21 @@ type dataTypeTemp = {
     humid: number,
 }[];
 
-export const TodaysTempDataPannel: React.FC<TodaysTempDataPannel> = ({}) => {
+export const TodaysTempDataPannel: React.FC<TodaysTempDataPannelType> = ({}) => {
     const [data, setData] = useState<dataTypeTemp>();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+    const hadleWindowResize = () => {
+        console.log('handle resize function');
+        setWindowWidth(window.innerWidth);
+    }
+    
+    window.addEventListener('resize', hadleWindowResize);
+
     useEffect(() => {
-        const hadleWindowResize = () => {
-            setWindowWidth(window.innerWidth);
-        }
         const getInfo = async () => {
             setData(await getTodaysTempData());
         }
-
-        window.addEventListener('resize', hadleWindowResize);
         getInfo();
 
         return () => {
