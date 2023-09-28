@@ -17,16 +17,15 @@ export const TodaysTempDataPannel: React.FC<TodaysTempDataPannelType> = ({}) => 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const hadleWindowResize = () => {
-        console.log('handle resize function');
         setWindowWidth(window.innerWidth);
     }
-    
-    window.addEventListener('resize', hadleWindowResize);
 
     useEffect(() => {
         const getInfo = async () => {
             setData(await getTodaysTempData());
         }
+
+        window.addEventListener('resize', hadleWindowResize);
         getInfo();
 
         return () => {
