@@ -1,3 +1,4 @@
+// backend responce for this file can be mocked
 import axios from "axios"
 import { backendServerUrl } from "../../urls"
 
