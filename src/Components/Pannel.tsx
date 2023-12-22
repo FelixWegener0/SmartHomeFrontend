@@ -1,11 +1,13 @@
 type PannelType = {
     name: string;
     windowWidth: number;
-    localTemp: number;
-    localHumid: number;
+    localTemp?: number;
+    localHumid?: number;
 };
 
 export const Pannel: React.FC<PannelType> = ({ name, localTemp, localHumid, windowWidth }) => {
+    if (!localHumid || !localTemp) return null;
+
     return (
         <div style={{
             width: windowWidth / 2,

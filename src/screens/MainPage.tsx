@@ -4,11 +4,9 @@ import data from '../endpoints.json'
 import { Pannel } from "../Components/Pannel";
 import { AktualliesierungsButton, SwitchToGraphPageButton } from "../Components/Button";
 
-
-
 export const MainPage = () => {
-    const [schlafzimmerTemp, setschlafzimmerTemp] = useState(0);
-    const [schlafzimmerHumid, setschlafzimmerHumid] = useState(0);
+    const [schlafzimmerTemp, setschlafzimmerTemp] = useState<number | number>();
+    const [schlafzimmerHumid, setschlafzimmerHumid] = useState<number | number>();
 
     const [wohnzimmerTemp, setWohnzimmerTemp] = useState(0);
     const [wohnzimmerHumid, setWohnzimmerHumid] = useState(0);
@@ -24,14 +22,14 @@ export const MainPage = () => {
         setschlafzimmerHumid(await getDateFromSpecificEndpoint(data[0].ip + '/humid'));
 
         // setWohnzimmerTemp(await getDateFromSpecificEndpoint(data[1].ip + '/temp'));
-        // setWohnzimmerHumid(await getDateFromSpecificEndpoint(data[1].ip + '/humid'))
+        // setWohnzimmerHumid(await getDateFromSpecificEndpoint(data[1].ip + '/humid'));
     }
 
     useEffect(() => {
         checkInfo();
         window.addEventListener('resize', hadleWindowResize);
         const dataIntervall = setInterval(() => {
-            console.log('log in intervall')
+            console.log('log in intervall');
             checkInfo();
         }, 60000)
 
@@ -55,5 +53,5 @@ export const MainPage = () => {
                 <SwitchToGraphPageButton windowWidth={windowWidth} />
             </div>
         </div>
-    )
-}
+    );
+};
