@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getDateFromSpecificEndpoint } from "../utils/api";
 import data from '../endpoints.json'
+import { Pannel } from "../Components/Pannel";
+import { AktualliesierungsButton, SwitchToGraphPageButton } from "../Components/Button";
+
+
 
 export const MainPage = () => {
     const [schlafzimmerTemp, setschlafzimmerTemp] = useState(0);
@@ -17,7 +21,7 @@ export const MainPage = () => {
 
     const checkInfo = async () => {
         setschlafzimmerTemp(await getDateFromSpecificEndpoint(data[0].ip + '/temp'));
-        setschlafzimmerHumid(await getDateFromSpecificEndpoint(data[0].ip + '/humid'))
+        setschlafzimmerHumid(await getDateFromSpecificEndpoint(data[0].ip + '/humid'));
 
         // setWohnzimmerTemp(await getDateFromSpecificEndpoint(data[1].ip + '/temp'));
         // setWohnzimmerHumid(await getDateFromSpecificEndpoint(data[1].ip + '/humid'))
@@ -26,9 +30,14 @@ export const MainPage = () => {
     useEffect(() => {
         checkInfo();
         window.addEventListener('resize', hadleWindowResize);
+        const dataIntervall = setInterval(() => {
+            console.log('log in intervall')
+            checkInfo();
+        }, 60000)
 
         return () => {
             window.removeEventListener('resize', hadleWindowResize);
+            clearInterval(dataIntervall);
         }
     }, [])
 
@@ -36,37 +45,14 @@ export const MainPage = () => {
         <div>
             <h1>Übersicht Temperatur und Luftfeuchtigkeit</h1>
 
-            {/* Schlafzimmer infobox */}
-            <div style={{
-                width: windowWidth / 2,
-                backgroundColor: schlafzimmerHumid > 60 ? "lightsalmon" : "white",
-                float: "left"
-            }}>
-                <h2>Schlafzimmer info: </h2>
-                <h3>Temperatur: {schlafzimmerTemp}°C</h3>
-                <h3>Humidity: {schlafzimmerHumid}%</h3>
-            </div>
+            <Pannel name={"Schlafzimmer"} localTemp={schlafzimmerTemp} localHumid={schlafzimmerHumid} windowWidth={windowWidth} />
+            <Pannel name={"Wohnzimmer"} localTemp={0} localHumid={0} windowWidth={windowWidth} />
+            <Pannel name={"Badezimmer"} localTemp={0} localHumid={0} windowWidth={windowWidth} />
+            <Pannel name={"Flur"} localTemp={0} localHumid={0} windowWidth={windowWidth} />
 
-            {/* Wohnzimmer infobox */}
-            <div style={{
-                width: windowWidth / 2,
-                backgroundColor: wohnzimmerHumid > 60 ? "lightsalmon" : "white",
-                float: "right"
-            }}>
-                <h2>Wohnzimmer info: </h2>
-                <h3>Temperatur: {wohnzimmerTemp}°C</h3>
-                <h3>Humidity: {wohnzimmerHumid}%</h3>
-            </div>
-
-            {/* reset Button */}
             <div>
-                <button
-                    onClick={() => {
-                        checkInfo();
-                    }}
-                >
-                    <h3>Aktualisieren</h3>
-                </button>
+                <AktualliesierungsButton checkInfo={checkInfo} windowWidth={windowWidth} />
+                <SwitchToGraphPageButton windowWidth={windowWidth} />
             </div>
         </div>
     )

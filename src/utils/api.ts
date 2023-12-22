@@ -1,5 +1,7 @@
 import axios from "axios"
 
+const serverIp = "pi.local";
+
 export const getDateFromSpecificEndpoint = async (url: string) => {
     try {
         const result = await axios.get<number>(url, {
