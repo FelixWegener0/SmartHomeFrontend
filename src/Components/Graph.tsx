@@ -31,8 +31,8 @@ export const RoomGraph: React.FC<RoomGraphType> = ({ windowWidth, data }) => {
                 <XAxis dataKey={"time"} />
 
                 <Tooltip />
-                <Line type={"monotone"} dataKey={"temp"} yAxisId={0} />
-                <Line type={"monotone"} dataKey={"humid"} yAxisId={1} />
+                <Line type={"monotone"} dataKey={"temp"} yAxisId={0} name="Temperatur" />
+                <Line type={"monotone"} dataKey={"humid"} yAxisId={1} name="Feuchtigkeit" />
             </LineChart>
         </div>
     )
