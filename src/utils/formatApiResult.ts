@@ -26,7 +26,11 @@ export const seperateData = (data?: GetAllDataType) => {
             for (let j = 0; j < data.length; j++) {
                 if (newData[i].name === data[j].name) {
                     if (!newData[i].data) newData[i].data = [];
-                    newData[i].data?.push(data[j])
+
+                    // del sensor Errors
+                    if (data[j].temp && data[j].humid) {
+                        newData[i].data?.push(data[j]);
+                    }
                 }
             }
         }

@@ -27,7 +27,7 @@ export const GraphPage = () => {
                             <RoomGraph windowWidth={windowWidth} data={element} />
                         );
                     })
-                };
+                }
             </div>
         );
     };
