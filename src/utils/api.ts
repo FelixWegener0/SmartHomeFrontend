@@ -34,7 +34,7 @@ export const getDateFromSpecificEndpoint = async (url: string) => {
 };
 
 export const getAllDataFromDataBase = async () => {
-    const url = serverIp + '/allData'
+    const url = serverIp + '/allTodaysData'
     const data: GetAllDataType = [];
 
     try {
