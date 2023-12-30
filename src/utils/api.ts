@@ -1,4 +1,5 @@
 import axios from "axios"
+import data from '../endpoints.json'
 
 const serverIp = "http://pi.local:5000";
 
@@ -28,7 +29,7 @@ export const getDateFromSpecificEndpoint = async (url: string) => {
         console.log('API RESULT: ', url, ' ', result.data)
         return result.data;
     } catch (error) {
-        console.log(error);
+        console.log('error for url: ', url, '   ', error);
         return 0;
     };
 };
@@ -56,4 +57,45 @@ export const getAllDataFromDataBase = async () => {
     } catch (error) {
         console.log(error);
     };
+};
+
+export const getTodaysData = async (room: string, allData: number) => {
+    const url = serverIp + '/allTodaysDataRoom/' + room + '/' + allData
+
+    try {
+        const result = await axios.get(url, {
+            timeout: 10000,
+        });
+        return result.data;
+    } catch (error) {
+        console.log(error)
+    }
+
+    console.log(url)
+}
+
+export const getCurrentData = async (ip: string) => {
+    let tempResult = 0;
+    let humidResult = 0;
+
+    while(tempResult === 0) {
+        try {
+            const result = await axios.get<number>(ip + '/temp');
+            tempResult = result.data;
+        } catch (error: any) {
+            console.log('Error in get Temp for: ', ip, '    ' , error.message)
+            break;
+        }
+    };
+    
+    while(humidResult === 0) {
+        try {
+            const result = await axios.get<number>(ip + '/humid');
+            humidResult = result.data;
+        } catch (error: any) {
+            console.log('Error in get Humid for: ', ip, '    ', error.message)
+            break;
+        }
+    };
+    return { temp: tempResult, humid: humidResult }
 };

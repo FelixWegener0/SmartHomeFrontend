@@ -12,5 +12,33 @@
                 "path": "/humid"
             }
         ]
+    },
+    {
+        "name": "Wohnzimmer",
+        "ip": "http://192.168.0.31",
+        "endpoints": [
+            {
+                "name": "temperature",
+                "path": "/temp"
+            },
+            {
+                "name": "humiditiy",
+                "path": "/humid"
+            }
+        ]
+    },
+    {
+        "name": "Badezimmer",
+        "ip": "http://192.168.0.114",
+        "endpoints": [
+            {
+                "name": "temperature",
+                "path": "/temp"
+            },
+            {
+                "name": "humiditiy",
+                "path": "/humid"
+            }
+        ]
     }
 ]
